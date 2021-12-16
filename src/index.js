@@ -31,11 +31,19 @@ const people= [
 const searchInput = document.querySelector('.input')
 const clearButton = document.querySelector('.clear-result')
 
-searchInput.addEventListener("input", (event)=>{
+searchInput.addEventListener("keyup", (event)=>{
+    event.preventDefault()
+    clearList()
     //inside, we will need to achieve a few things:
     //1. declare and assign the value of the event target to a variable 
+
     let searchValue = event.target.value;
 
+    searchQuery(searchValue)
+
+});
+
+function searchQuery(searchValue){
     //2. check: if input exists and if input is larger then 0
     if(searchValue && searchValue.trim().length > 0){
         //3. redefine value to exclude white space and change  input to all lower case
@@ -43,9 +51,13 @@ searchInput.addEventListener("input", (event)=>{
         //4. return the result only if the value of teh search is included inthe person's name
         // we need to write code (a function for filtering through our data to include the search input value )
         // return only the results of the setList if the value of teh search is included in the persons name.  
-        setList(people.filter(person => {
+        
+        const filteredCharacters = people.filter(person => {
             return person.name.includes(value)
-        }))
+        });
+        
+        console.log("filteredCharacters", filteredCharacters)
+        setList(filteredCharacters)
     
     }else{
         //.5 return nothing
@@ -53,7 +65,8 @@ searchInput.addEventListener("input", (event)=>{
         clearList()
     }
 
-});
+
+}
 
 clearButton.addEventListener("click", ()=>{    
     //1. write a function that removes any previous results from the page
